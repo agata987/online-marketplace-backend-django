@@ -26,7 +26,15 @@ SECRET_KEY = '6tb6+gyo0l60c(!r%hp$x*i=d-c=h5+16pi7ik#eb6h+kx1wg*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['onlinemarketplace100.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'onlinemarketplace100.herokuapp.com', 
+    '127.0.0.1'
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = (
+#     'hostname.example.com'
+# )
 
 
 # Application definition
