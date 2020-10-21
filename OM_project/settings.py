@@ -31,7 +31,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1'
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = True    # ZMIENIC POTEM NA TO CO JEST NA DOLE NOTE !!! TODO
 # CORS_ORIGIN_WHITELIST = (
 #     'hostname.example.com'
 # )
