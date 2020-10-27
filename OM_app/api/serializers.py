@@ -6,7 +6,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
 from django.utils.translation import ugettext as _
 
-from ..models import User
+from ..models import User, Voivodeship, City, Offer
 from ..utils import get_rundom_string
 
 
@@ -123,3 +123,13 @@ class UserSerializerWithToken(serializers.ModelSerializer):
         instance.email_verification_hash = get_rundom_string(32)
         instance.save()
         return instance
+
+class VoivodeshipSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Voivodeship
+        fields = '__all__'
+
+class CitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = City
+        fields = '__all__'

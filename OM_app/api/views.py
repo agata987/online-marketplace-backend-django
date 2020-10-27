@@ -130,3 +130,18 @@ class ChangePasswordView(generics.UpdateAPIView):
             return Response(status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class VoivodeshipList(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        voivodeships = Voivodeship.objects.all().order_by('name')
+        serializer = VoivodeshipSerializer(voivodeships, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class CityList(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        cities = City.objects.all().order_by('name')
+        name = self.request.query_params.get('name', None)
+        if name is not None:
+            cities = cities.filter(voivodeship_id=(Voivodeship.objects.get(name=name)))
+        serializer = CitySerializer(cities, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
