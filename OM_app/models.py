@@ -30,10 +30,10 @@ class UserManager(BaseUserManager):
         return user_obj
 
 class User(AbstractBaseUser):
-    username = models.TextField(max_length=15, null=False, unique=True)
+    username = models.TextField(max_length=15, unique=True)
     first_name = None
     last_name = None
-    email = models.EmailField(max_length=320, null=False, unique=True)
+    email = models.EmailField(max_length=320, unique=True)
     is_active = models.BooleanField(default=True)  # can login
     is_staff = models.BooleanField(default=False)  # staff, but not superuser, # for django auth app
     is_superuser = models.BooleanField(default=False)  # superuser, admin
@@ -43,7 +43,7 @@ class User(AbstractBaseUser):
     email_verification_hash = models.TextField(max_length=15)
     email_verified = models.BooleanField(default=False)
 
-    password = models.CharField(null=False, max_length=128) # NOTE max 128 characters for password
+    password = models.CharField(max_length=128) # NOTE max 128 characters for password
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']  # ex ['first_name'] #py manage.py createsuperuser
@@ -60,3 +60,63 @@ class User(AbstractBaseUser):
     @staticmethod
     def has_module_perms(app_label):  # for django auth app
         return True
+
+class Voivodeship(models.Model):
+    """
+    Polish voivodeships (for cities)
+    """
+    name = models.CharField(
+        max_length=25,
+    )
+    def __str__(self):
+        return self.name
+
+class City(models.Model):
+    voivodeship_id = models.ForeignKey(
+        Voivodeship,
+        on_delete=models.CASCADE,
+    )
+
+    name = models.CharField(
+        max_length=30,
+    )
+
+    def __str__(self):
+        return self.name
+
+class Offer(models.Model):
+    """
+    Model of offer published by user (not job offer).
+    """
+    user_id = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
+
+    city_id = models.ForeignKey(
+        City,
+        models.SET_NULL,
+        null=True
+    )
+
+    name = models.CharField(
+        max_length=30,
+    )
+
+    price = models.DecimalField(
+        max_digits=15,
+        decimal_places=2,
+        null=True
+    )
+
+    decription = models.TextField(
+        max_length=1500,
+        blank=True
+    )
+
+    creation_date = models.DateField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return self.name
