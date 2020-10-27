@@ -124,12 +124,13 @@ class UserSerializerWithToken(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class VoivodeshipSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Voivodeship
-        fields = '__all__'
-
 class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
-        fields = '__all__'
+        fields = ('id', 'name')
+# nested serializer
+class VoivodeshipCitiesSerializer(serializers.ModelSerializer):
+    cities = CitySerializer(many=True, read_only=True)
+    class Meta:
+        model = Voivodeship
+        fields = ('name', 'cities')

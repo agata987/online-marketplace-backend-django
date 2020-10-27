@@ -41,3 +41,4 @@ admin.site.unregister(Group)
 
 admin.site.register(Voivodeship)
 admin.site.register(City)
+admin.site.register(Offer)

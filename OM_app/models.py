@@ -75,6 +75,7 @@ class City(models.Model):
     voivodeship_id = models.ForeignKey(
         Voivodeship,
         on_delete=models.CASCADE,
+        related_name='cities'   # for nested serialization
     )
 
     name = models.CharField(
