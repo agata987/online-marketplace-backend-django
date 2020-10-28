@@ -7,7 +7,8 @@ from rest_framework_jwt.views import ObtainJSONWebToken
 from datetime import datetime
 from django.utils import timezone
 from django.contrib.sites.shortcuts import get_current_site
-from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 from .serializers import *
 from ..auth import my_jwt_response_handler
@@ -157,10 +158,13 @@ class VoivodeshipCitiesList(generics.GenericAPIView):
 class OfferList(generics.ListCreateAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
+    
 
     # filters
-    filter_backends = (SearchFilter, )
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filter_fields = ('city_id', 'user_id', 'category_id')
     search_fields = ('name',)
+    ordering_fields = ('price', 'creation_date')
 
 class OfferDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Offer.objects.all()

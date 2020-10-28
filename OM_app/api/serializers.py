@@ -63,7 +63,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email',)
+        fields = ('username', 'email','email_verified',)
 
 # NOTE used in auth.my_jwt_response_handler
 class JWTReponseHandlerSerializer(serializers.ModelSerializer):
