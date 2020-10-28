@@ -6,7 +6,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
 from django.utils.translation import ugettext as _
 
-from ..models import User, Voivodeship, City, Offer
+from ..models import *
 from ..utils import get_rundom_string
 
 
@@ -134,3 +134,13 @@ class VoivodeshipCitiesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Voivodeship
         fields = ('name', 'cities')
+
+class OfferSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Offer
+        fields = '__all__'
+
+class OfferCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OfferCategory
+        fields = '__all__'

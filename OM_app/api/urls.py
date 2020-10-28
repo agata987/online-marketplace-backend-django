@@ -15,8 +15,11 @@ urlpatterns = [
     path('auth/password/change/', ChangePasswordView.as_view(), name='change-password'),                        # change user's password
     # path('auth/password/reset/', reset_password),                                                             # reset user's password by sending an e-mail
     # GENERAL
-    path('voivodeships_cities_list/', VoivodeshipCitiesList.as_view(), name='voivodeships-list'),               # get list of voivodeships and cities
+    path('voivodeships_cities_list/', VoivodeshipCitiesList.as_view(), name='voivodeships-cities-list'),        # get list of voivodeships and cities
     # OFFERS
+    path('offers/', OfferList.as_view(), name='offers-list'),                                                   # list of offers
+    path('offers/<pk>/', OfferDetail.as_view(), name='offer-detail'),                                           # details of an offer
+    path('offer-categories/', OfferCategoryList.as_view(), name='offer-categories-list')                        # list of offer categories
     # JOB OFFERS
 ]
 

@@ -85,6 +85,18 @@ class City(models.Model):
     def __str__(self):
         return self.name
 
+class OfferCategory(models.Model):
+    """
+    Category for an offer with an "icon" property for an icon name.
+    """
+    name = models.CharField(
+        max_length=20
+    )
+
+    icon = models.CharField(
+        max_length=20
+    )
+
 class Offer(models.Model):
     """
     Model of offer published by user (not job offer).
@@ -94,11 +106,13 @@ class Offer(models.Model):
         on_delete=models.CASCADE,
     )
 
-    city_id = models.ForeignKey(
-        City,
-        models.SET_NULL,
-        null=True
-    )
+    # This version of djongo does not support "NULL, NOT NULL column validation check" fully.
+    
+    # no ForeignKey because on_delete=models.SET_NULL causes migration errors
+    city_id = models.PositiveIntegerField()
+
+    # no ForeignKey because on_delete=models.SET_NULL causes migration errors
+    category_id = models.PositiveIntegerField()
 
     name = models.CharField(
         max_length=30,

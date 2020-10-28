@@ -7,6 +7,8 @@ from rest_framework_jwt.views import ObtainJSONWebToken
 from datetime import datetime
 from django.utils import timezone
 from django.contrib.sites.shortcuts import get_current_site
+from rest_framework.filters import SearchFilter
+
 from .serializers import *
 from ..auth import my_jwt_response_handler
 from ..utils import send_verification_email
@@ -151,3 +153,24 @@ class VoivodeshipCitiesList(generics.GenericAPIView):
 #             cities = cities.filter(voivodeship_id=(Voivodeship.objects.get(name=name)))
 #         serializer = CitySerializer(cities, many=True)
 #         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class OfferList(generics.ListCreateAPIView):
+    queryset = Offer.objects.all()
+    serializer_class = OfferSerializer
+
+    # filters
+    filter_backends = (SearchFilter, )
+    search_fields = ('name',)
+
+class OfferDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Offer.objects.all()
+    serializer_class = OfferSerializer
+
+class OfferCategoryList(generics.GenericAPIView):
+    """
+    Get list of categories of offers.
+    """
+    def get(self, request, *args, **kwargs):
+        categories = OfferCategory.objects.all().order_by('name')
+        serializer = OfferCategorySerializer(categories, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
