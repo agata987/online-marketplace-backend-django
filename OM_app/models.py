@@ -124,7 +124,7 @@ class Offer(models.Model):
         null=True
     )
 
-    decription = models.TextField(
+    description = models.TextField(
         max_length=1500,
         blank=True
     )
