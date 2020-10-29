@@ -45,8 +45,8 @@ class User(AbstractBaseUser):
 
     password = models.CharField(max_length=128) # NOTE max 128 characters for password
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']  # ex ['first_name'] #py manage.py createsuperuser
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username',]  # ex ['first_name'] #py manage.py createsuperuser
 
     objects = UserManager()
 

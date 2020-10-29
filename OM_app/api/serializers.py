@@ -33,7 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email','email_verified',)
+        fields = ('id', 'username', 'email','email_verified',)
 
 # NOTE with ModelSerializer in case we want to update password, there will be issues due to hashing before save
 class ChangePasswordSerializer(serializers.Serializer):
