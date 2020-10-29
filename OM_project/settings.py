@@ -128,7 +128,9 @@ AUTH_USER_MODEL = 'OM_app.User'
 
 JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'OM_app.auth.my_jwt_response_handler',
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=30)      # ZMIENIC CZAS!!!!! TODO co tyle czasu wygasa token i jest potem info w json'ie ze wygasl
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=20),      # ZMIENIC CZAS!!!!! TODO co tyle czasu wygasa token i jest potem info w json'ie ze wygasl
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 }
 
 REST_FRAMEWORK = {

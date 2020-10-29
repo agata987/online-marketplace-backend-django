@@ -1,5 +1,5 @@
 from django.urls import path
-# from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 from .views import *
 
@@ -8,6 +8,7 @@ urlpatterns = [
     # AUTHENTICATION
     path('auth/token/', ObtainJSONWebToken.as_view(serializer_class=CustomJWTSerializer)),                      # get user token and user data
     path('auth/register/', register),                                                                           # register a new user (create a new token)
+    path('auth/refreash-token/', refresh_jwt_token),                                                            # refreash jwt token
     # activate an account
     path('auth/email-verification/send/', SendVerificationEmail.as_view(), name='send-verification-email'),     # send a verification e-mail to a user
     path('auth/email-verification/verify/', VerifyEmail.as_view(), name='verify-email'),                        # verify email with given verification hash and user id
