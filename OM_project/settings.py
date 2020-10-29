@@ -126,21 +126,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'OM_app.User'
 
-JWT_AUTH = {
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'OM_app.auth.my_jwt_response_handler',
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=20),      # ZMIENIC CZAS!!!!! TODO co tyle czasu wygasa token i jest potem info w json'ie ze wygasl
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
-}
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
 }
