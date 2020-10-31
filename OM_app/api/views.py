@@ -36,8 +36,8 @@ def register(request):
         serializer.save()
 
         # sending a verification email
-        domain = get_current_site(request).domain
-        send_verification_email(serializer.instance.email, serializer.instance.email_verification_hash, domain, serializer.instance.id)
+        # domain = get_current_site(request).domain
+        # send_verification_email(serializer.instance.email, serializer.instance.email_verification_hash, domain, serializer.instance.id)
 
         return Response(status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
