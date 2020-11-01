@@ -7,6 +7,7 @@ from rest_framework_simplejwt.views import (
 from .views import *
 
 urlpatterns = [
+
     # AUTHENTICATION
     path('auth/token/', TokenObtainPairView.as_view(), name='token-obtain-pair'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
@@ -20,9 +21,9 @@ urlpatterns = [
     # GENERAL
     path('voivodeships-cities/', VoivodeshipCitiesList.as_view(), name='voivodeships-cities-list'),             # get list of voivodeships and cities
     # OFFERS
+    path('offers/categories/', OffersCategoriesList.as_view(), name='offers-categories-list'),                  # list of offer categories
     path('offers/', OfferList.as_view(), name='offers-list'),                                                   
     path('offers/<pk>/', OfferDetail.as_view(), name='offer-detail'),                                           
-    path('offers/categories/', OfferCategoryList.as_view(), name='offer-categories-list')                       # list of offer categories
     # JOB OFFERS
 ]
 

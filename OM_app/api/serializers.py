@@ -57,7 +57,7 @@ class OfferSerializer(serializers.ModelSerializer):
         model = Offer
         fields = '__all__'
 
-class OfferCategorySerializer(serializers.ModelSerializer):
+class OffersCategoriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = OfferCategory
         fields = '__all__'

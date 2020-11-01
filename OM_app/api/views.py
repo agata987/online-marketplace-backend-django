@@ -5,6 +5,7 @@ from rest_framework import status, generics
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
+from ..models import *
 from .serializers import *
 
 class UsersList(generics.ListCreateAPIView):
@@ -77,11 +78,11 @@ class OfferDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
 
-class OfferCategoryList(generics.GenericAPIView):
+class OffersCategoriesList(generics.GenericAPIView):
     """
     Get list of categories of offers.
     """
     def get(self, request, *args, **kwargs):
         categories = OfferCategory.objects.all().order_by('name')
-        serializer = OfferCategorySerializer(categories, many=True)
+        serializer = OffersCategoriesSerializer(categories, many=True)
         return Response(serializer.data)
