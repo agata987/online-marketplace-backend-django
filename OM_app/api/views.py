@@ -11,6 +11,11 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from .serializers import *
 from ..utils import send_verification_email
 
+class UsersList(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    permission_classes=(AllowAny,)
+    serializer_class = BaseUserSerializer
+
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     Get all user info, update email or delete a user by sending a token.
@@ -23,24 +28,30 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         return self.request.user
 
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def register(request):
-    """
-    Register a new user with a new token.
-    """
-    serializer = RegisterUserSerializer(data=request.data)
-    if serializer.is_valid():
+class UserCreate(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = RegisterUserSerializer
+    permission_classes = (AllowAny, )
 
-        # creating a user
-        serializer.save()
 
-        # sending a verification email
-        # domain = get_current_site(request).domain
-        # send_verification_email(serializer.instance.email, serializer.instance.email_verification_hash, domain, serializer.instance.id)
+# @api_view(['POST'])
+# @permission_classes([AllowAny])
+# def register(request):
+#     """
+#     Register a new user with a new token.
+#     """
+#     serializer = RegisterUserSerializer(data=request.data)
+#     if serializer.is_valid():
 
-        return Response(status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         # creating a user
+#         serializer.save()
+
+#         # sending a verification email
+#         # domain = get_current_site(request).domain
+#         # send_verification_email(serializer.instance.email, serializer.instance.email_verification_hash, domain, serializer.instance.id)
+
+#         return Response(status=status.HTTP_201_CREATED)
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class VerifyEmail(generics.GenericAPIView):

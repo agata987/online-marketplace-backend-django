@@ -7,23 +7,23 @@ from django.utils.translation import ugettext as _
 from ..models import *
 from ..utils import get_rundom_string
 
+class BaseUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
 class RegisterUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email','password')
+        fields = ('username', 'email','password')
         write_only_fields = ('password',)
 
     def create(self, validated_data):
-        user = User.objects.create(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            email_verification_hash=get_rundom_string(15)
-        )
-
-        user.set_password(validated_data['password'])
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)
         user.save()
-
         return user
 
 class UserSerializer(serializers.ModelSerializer):

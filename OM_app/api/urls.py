@@ -9,9 +9,10 @@ from .views import *
 urlpatterns = [
     path('current-user/', UserDetail.as_view(), name='user-detail'),                                            # get current user data, update or destroy the user
     # AUTHENTICATION
-    path('auth/register/', register),                                                                           # register a new user (create a new token)
+    path('auth/register/', UserCreate.as_view(), name='register'),                                              # register a new user (create a new token)
     path('auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('users/', UsersList.as_view(), name='user-lisr'),
     # activate an account
     # path('auth/email-verification/send/', SendVerificationEmail.as_view(), name='send-verification-email'),     # send a verification e-mail to a user
     # path('auth/email-verification/verify/', VerifyEmail.as_view(), name='verify-email'),                        # verify email with given verification hash and user id
