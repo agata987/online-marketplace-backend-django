@@ -13,7 +13,6 @@ class UsersList(generics.ListCreateAPIView):
     queryset = User.objects.all()
 
 class UserDetail(generics.RetrieveAPIView):
-    permission_classes=(AllowAny,)
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
