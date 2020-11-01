@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
-from .utils import get_rundom_string
-
-
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password, is_staff=False, is_superuser=False):
         if (email and password and username) == False:
@@ -11,7 +8,6 @@ class UserManager(BaseUserManager):
         user_obj = self.model(
             username = username,
             email=self.normalize_email(email),
-            email_verification_hash = get_rundom_string(15),
         )
         user_obj.set_password(password)  # we change the password the same way
         user_obj.is_staff = is_staff
@@ -38,10 +34,6 @@ class User(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)  # staff, but not superuser, # for django auth app
     is_superuser = models.BooleanField(default=False)  # superuser, admin
     date_joined = models.DateTimeField(auto_now_add=True, null=True)  # date of creation account, automatic
-
-    # For email verification
-    email_verification_hash = models.TextField(max_length=15)
-    email_verified = models.BooleanField(default=False)
 
     password = models.CharField(max_length=128) # NOTE max 128 characters for password
 
