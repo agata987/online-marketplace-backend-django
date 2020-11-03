@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'django_filters',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -131,4 +133,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dnbnkwed1',
+    'API_KEY': '249167674196514',
+    'API_SECRET': 'xMCJaSY5l4KoVHUyg0OmBL9PHDs'
+}
+
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'  # or any prefix you choose
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

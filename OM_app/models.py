@@ -125,5 +125,10 @@ class Offer(models.Model):
         auto_now_add=True
     )
 
+    image = models.ImageField(
+        upload_to ='offers_images/',
+        blank=True
+    )
+
     def __str__(self):
         return self.name
