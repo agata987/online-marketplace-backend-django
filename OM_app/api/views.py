@@ -86,3 +86,10 @@ class OffersCategoriesList(generics.GenericAPIView):
         categories = OfferCategory.objects.all().order_by('name')
         serializer = OffersCategoriesSerializer(categories, many=True)
         return Response(serializer.data)
+
+class CitiesList(generics.RetrieveAPIView):
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
+
+    #filters
+    filter_fields = ('id')
