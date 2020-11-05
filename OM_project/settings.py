@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django_filters',
     'cloudinary_storage',
     'cloudinary',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -70,7 +71,18 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'OM_project.wsgi.application'
+ASGI_APPLICATION = 'OM_project.asgi.application'
 
+# Channels
+ASGI_APPLICATION = 'OM_project.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

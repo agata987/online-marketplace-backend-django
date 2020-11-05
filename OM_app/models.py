@@ -132,3 +132,31 @@ class Offer(models.Model):
 
     def __str__(self):
         return self.name
+
+# chat models
+
+class Contact(models.Model):
+    user_id = models.PositiveIntegerField(default=-1) # adding foreign key results in djongo error
+    friends = models.ManyToManyField('self', blank=True)
+
+    def __str__(self):
+        return "{}".format(self.user_id)
+
+
+class Message(models.Model):
+    contact = models.ForeignKey(
+        Contact, related_name='messages', on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "{}".format(self.contact.user_id)
+
+
+class Chat(models.Model):
+    participants = models.ManyToManyField(
+        Contact, related_name='chats', blank=True)
+    messages = models.ManyToManyField(Message, blank=True)
+
+    def __str__(self):
+        return "{}".format(self.pk)

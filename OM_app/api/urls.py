@@ -11,6 +11,12 @@ urlpatterns = [
     # AUTHENTICATION
     path('auth/token/', TokenObtainPairView.as_view(), name='token-obtain-pair'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
+    # CHAT
+    path('chat/', ChatListView.as_view()),
+    path('chat/create/', ChatCreateView.as_view()),
+    path('chat/<pk>', ChatDetailView.as_view()),
+    path('chat/<pk>/update/', ChatUpdateView.as_view()),
+    path('chat/<pk>/delete/', ChatDeleteView.as_view()),
     # USERS
     path('users/current/', CurrentUser.as_view(), name='current-user'),                                         # get current user data/ update email or username
     path('users/', UsersList.as_view(), name='users-list'),

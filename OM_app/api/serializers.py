@@ -3,6 +3,7 @@ from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 
 from ..models import *
+from ..chat_utils import get_user_contact
 
 # user
 class UserSerializer(serializers.ModelSerializer):
@@ -61,3 +62,29 @@ class OffersCategoriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = OfferCategory
         fields = '__all__'
+
+# contact serializers
+
+class ContactSerializer(serializers.StringRelatedField):
+    def to_internal_value(self, value):
+        return value
+
+
+class ChatSerializer(serializers.ModelSerializer):
+    participants = ContactSerializer(many=True)
+
+    class Meta:
+        model = Chat
+        fields = ('id', 'messages', 'participants')
+        read_only = ('id')
+
+    def create(self, validated_data):
+        print(validated_data)
+        participants = validated_data.pop('participants')
+        chat = Chat()
+        chat.save()
+        for user_id in participants:
+            contact = get_user_contact(user_id)
+            chat.participants.add(contact)
+        chat.save()
+        return chat

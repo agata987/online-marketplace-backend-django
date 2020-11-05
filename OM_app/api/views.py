@@ -1,5 +1,5 @@
 from rest_framework.decorators import permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status, generics
 from django_filters.rest_framework import DjangoFilterBackend
@@ -7,6 +7,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 
 from ..models import *
 from .serializers import *
+from ..chat_utils import get_user_contact
 
 class UsersList(generics.ListCreateAPIView):
     permission_classes=(AllowAny,)
@@ -93,3 +94,41 @@ class CitiesList(generics.RetrieveAPIView):
 
     #filters
     filter_fields = ('id')
+
+# chat views
+
+class ChatListView(generics.ListAPIView):
+    serializer_class = ChatSerializer
+    permission_classes = (IsAuthenticated, )
+
+    def get_queryset(self):
+        queryset = Chat.objects.all()
+        user_id = self.request.query_params.get('user_id', None)
+        if user_id is not None:
+            contact = get_user_contact(user_id)
+            queryset = contact.chats.all()
+        return queryset
+
+
+class ChatDetailView(generics.RetrieveAPIView):
+    queryset = Chat.objects.all()
+    serializer_class = ChatSerializer
+    permission_classes = (IsAuthenticated, )
+
+
+class ChatCreateView(generics.CreateAPIView):
+    queryset = Chat.objects.all()
+    serializer_class = ChatSerializer
+    permission_classes = (IsAuthenticated, )
+
+
+class ChatUpdateView(generics.UpdateAPIView):
+    queryset = Chat.objects.all()
+    serializer_class = ChatSerializer
+    permission_classes = (IsAuthenticated, )
+
+
+class ChatDeleteView(generics.DestroyAPIView):
+    queryset = Chat.objects.all()
+    serializer_class = ChatSerializer
+    permission_classes = (IsAuthenticated, )
