@@ -7,11 +7,6 @@ from .chat_utils import get_last_10_messages, get_user_contact, get_current_chat
 
 class ChatConsumer(WebsocketConsumer):
 
-    commands = {
-    'fetch_messages': fetch_messages,
-    'new_message': new_message
-    }
-
     def fetch_messages(self, data):
         messages = get_last_10_messages(data['chatId'])
         content = {
@@ -47,6 +42,11 @@ class ChatConsumer(WebsocketConsumer):
             'content': message.content,
             'timestamp': str(message.timestamp)
         }
+
+    commands = {
+    'fetch_messages': fetch_messages,
+    'new_message': new_message
+    }
 
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']

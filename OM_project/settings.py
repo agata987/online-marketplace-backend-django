@@ -71,7 +71,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'OM_project.wsgi.application'
-ASGI_APPLICATION = 'OM_project.asgi.application'
 
 # Channels
 ASGI_APPLICATION = 'OM_project.asgi.application'
@@ -79,7 +78,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [('127.0.0.1', 6380)], #NOTE IMPORTANT default redis server port is 6379, app needds redis server to work properly
         },
     },
 }

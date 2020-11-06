@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+import json
+from django.forms.models import model_to_dict
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password, is_staff=False, is_superuser=False):
@@ -140,7 +142,11 @@ class Contact(models.Model):
     friends = models.ManyToManyField('self', blank=True)
 
     def __str__(self):
-        return "{}".format(self.user_id)
+        user = User.objects.filter(id=self.user_id)[0]
+        user_dic = model_to_dict(user,fields=['id', 'username'])
+        user_data = json.dumps(user_dic)
+
+        return user_data
 
 
 class Message(models.Model):
