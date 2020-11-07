@@ -107,13 +107,13 @@ class ChatListView(generics.ListAPIView):
         if user_id is not None:
             contact = get_user_contact(user_id)
             queryset = contact.chats.all()
+            
         return queryset
 
 
 class ChatDetailView(generics.RetrieveAPIView):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
-    permission_classes = (IsAuthenticated, )
 
 class ChatCreateView(generics.CreateAPIView):
     queryset = Chat.objects.all()

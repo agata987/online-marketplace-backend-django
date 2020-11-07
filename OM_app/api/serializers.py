@@ -3,7 +3,7 @@ from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 
 from ..models import *
-from ..chat_utils import get_user_contact
+from ..chat_utils import create_chat_contact
 
 # user
 class UserSerializer(serializers.ModelSerializer):
@@ -84,7 +84,7 @@ class ChatSerializer(serializers.ModelSerializer):
         chat = Chat()
         chat.save()
         for username in participants:
-            contact = get_user_contact(username)
+            contact = create_chat_contact(username)
             chat.participants.add(contact)
         chat.save()
         return chat
