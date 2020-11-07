@@ -1,4 +1,4 @@
-from rest_framework.decorators import permission_classes
+from rest_framework.decorators import permission_classes, api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status, generics
@@ -115,18 +115,15 @@ class ChatDetailView(generics.RetrieveAPIView):
     serializer_class = ChatSerializer
     permission_classes = (IsAuthenticated, )
 
-
 class ChatCreateView(generics.CreateAPIView):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
     permission_classes = (IsAuthenticated, )
 
-
 class ChatUpdateView(generics.UpdateAPIView):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
     permission_classes = (IsAuthenticated, )
-
 
 class ChatDeleteView(generics.DestroyAPIView):
     queryset = Chat.objects.all()

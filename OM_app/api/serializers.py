@@ -75,7 +75,7 @@ class ChatSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chat
-        fields = ('id', 'messages', 'participants')
+        fields = ('id', 'participants')
         read_only = ('id')
 
     def create(self, validated_data):
@@ -83,8 +83,8 @@ class ChatSerializer(serializers.ModelSerializer):
         participants = validated_data.pop('participants')
         chat = Chat()
         chat.save()
-        for user_id in participants:
-            contact = get_user_contact(user_id)
+        for username in participants:
+            contact = get_user_contact(username)
             chat.participants.add(contact)
         chat.save()
         return chat

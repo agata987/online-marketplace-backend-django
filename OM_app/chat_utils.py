@@ -7,9 +7,19 @@ def get_last_10_messages(chatId):
     return chat.messages.order_by('-timestamp').all()[:10]
 
 
-def get_user_contact(user_id):
-    user = get_object_or_404(User, id=user_id)
-    return get_object_or_404(Contact, user_id=user.id)
+def get_user_contact(user_id):  # if contact does not exists create
+    if (isinstance(user_id,str)):
+        user = get_object_or_404(User, username=user_id)
+        try:
+            contact = Contact.objects.get(user_id=user.id)
+        except Exception:
+            contact = Contact.objects.create(user_id=user.id)
+    else:
+        try:
+            contact = Contact.objects.get(user_id=user_id)
+        except Exception:
+            contact = Contact.objects.create(user_id=user_id)
+    return contact
 
 
 def get_current_chat(chatId):
