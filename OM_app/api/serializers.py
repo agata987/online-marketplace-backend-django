@@ -53,6 +53,8 @@ class VoivodeshipCitiesSerializer(serializers.ModelSerializer):
         model = Voivodeship
         fields = ('name', 'cities')
 
+# offers
+
 class OfferSerializer(serializers.ModelSerializer):
     class Meta:
         model = Offer
@@ -61,6 +63,18 @@ class OfferSerializer(serializers.ModelSerializer):
 class OffersCategoriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = OfferCategory
+        fields = '__all__'
+
+# job offers
+
+class JobOfferSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobOffer
+        fields = '__all__'
+
+class JobOffersCategoriesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobOfferCategory
         fields = '__all__'
 
 # contact serializers

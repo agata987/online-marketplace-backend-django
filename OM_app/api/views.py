@@ -9,6 +9,8 @@ from ..models import *
 from .serializers import *
 from ..chat_utils import get_user_contact
 
+# USERS
+
 class UsersList(generics.ListCreateAPIView):
     permission_classes=(AllowAny,)
     serializer_class = UserSerializer
@@ -56,6 +58,8 @@ class ChangePasswordView(generics.UpdateAPIView):
             return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# VOIVODESHIPS AND CITIES
+
 class VoivodeshipCitiesList(generics.GenericAPIView):
     """
     Get list of voivodeships and cities.
@@ -64,6 +68,15 @@ class VoivodeshipCitiesList(generics.GenericAPIView):
         voivodeships = Voivodeship.objects.all().order_by('name')
         serializer = VoivodeshipCitiesSerializer(voivodeships, many=True)
         return Response(serializer.data)
+
+class CitiesList(generics.RetrieveAPIView):
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
+
+    #filters
+    filter_fields = ('id')
+
+# OFFERS
 
 class OfferList(generics.ListCreateAPIView):
     queryset = Offer.objects.all()
@@ -88,14 +101,31 @@ class OffersCategoriesList(generics.GenericAPIView):
         serializer = OffersCategoriesSerializer(categories, many=True)
         return Response(serializer.data)
 
-class CitiesList(generics.RetrieveAPIView):
-    queryset = City.objects.all()
-    serializer_class = CitySerializer
+# JOB OFFERS
+class JobOfferList(generics.ListCreateAPIView):
+    queryset = JobOffer.objects.all()
+    serializer_class = JobOfferSerializer
+    
+    # filters
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filter_fields = ('city_id', 'user_id', 'category_id', 'min_salary', 'max_salary')
+    search_fields = ('name', 'company')
+    ordering_fields = ('min_salary', 'max_salary', 'creation_date',)
 
-    #filters
-    filter_fields = ('id')
+class JobOfferDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = JobOffer.objects.all()
+    serializer_class = JobOfferSerializer
 
-# chat views
+class JobOffersCategoriesList(generics.GenericAPIView):
+    """
+    Get list of categories of job offers.
+    """
+    def get(self, request, *args, **kwargs):
+        categories = JobOfferCategory.objects.all().order_by('name')
+        serializer = JobOffersCategoriesSerializer(categories, many=True)
+        return Response(serializer.data)
+
+# CHAT
 
 class ChatListView(generics.ListAPIView):
     serializer_class = ChatSerializer

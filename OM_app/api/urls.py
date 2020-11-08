@@ -32,6 +32,9 @@ urlpatterns = [
     path('offers/', OfferList.as_view(), name='offers-list'),                                                   
     path('offers/<pk>/', OfferDetail.as_view(), name='offer-detail'),                                           
     # JOB OFFERS
+    path('joboffers/categories/', JobOffersCategoriesList.as_view(), name='job-offers-categories-list'),                  # list of offer categories
+    path('joboffers/', JobOfferList.as_view(), name='job-offers-list'),                                                   
+    path('joboffers/<pk>/', JobOfferDetail.as_view(), name='job-offer-detail'),  
 ]
 
 # TODO

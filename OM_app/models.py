@@ -135,6 +135,64 @@ class Offer(models.Model):
     def __str__(self):
         return self.name
 
+class JobOfferCategory(models.Model):
+    """
+    Category for an job offer.
+    """
+    name = models.CharField(
+        max_length=20
+    )
+
+class JobOffer(models.Model):
+    """
+    Job offer model.
+    """
+
+    user_id = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
+
+    # no ForeignKey because on_delete=models.SET_NULL causes migration errors
+    city_id = models.PositiveIntegerField()
+
+    # no ForeignKey because on_delete=models.SET_NULL causes migration errors
+    category_id = models.PositiveIntegerField()
+
+    name = models.CharField(
+        max_length=30,
+    )
+
+    min_salary = models.DecimalField(
+        max_digits=15,
+        decimal_places=2,
+    )
+
+    max_salary = models.DecimalField(
+        max_digits=15,
+        decimal_places=2,
+        null=True
+    )
+
+    description = models.TextField(
+        max_length=1500,
+        blank=True
+    )
+
+    creation_date = models.DateField(
+        auto_now_add=True
+    )
+
+    company = models.CharField(
+        max_length=30,
+        null=True
+    )
+
+    def __str__(self):
+        return self.name
+
+
+
 # chat models
 
 class Contact(models.Model):
