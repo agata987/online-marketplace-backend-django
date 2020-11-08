@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 import json
 from django.forms.models import model_to_dict
@@ -118,7 +119,8 @@ class Offer(models.Model):
     price = models.DecimalField(
         max_digits=15,
         decimal_places=2,
-        null=True
+        null=True,
+        validators=[MinValueValidator(0.0)]
     )
 
     description = models.TextField(
@@ -143,7 +145,7 @@ class JobOfferCategory(models.Model):
     Category for an job offer.
     """
     name = models.CharField(
-        max_length=20
+        max_length=30
     )
 
     def __str__(self):
@@ -172,12 +174,14 @@ class JobOffer(models.Model):
     min_salary = models.DecimalField(
         max_digits=15,
         decimal_places=2,
+        validators=[MinValueValidator(0.0)]
     )
 
     max_salary = models.DecimalField(
         max_digits=15,
         decimal_places=2,
-        null=True
+        blank=True,
+        validators=[MinValueValidator(0.0)]
     )
 
     description = models.TextField(
@@ -191,7 +195,7 @@ class JobOffer(models.Model):
 
     company = models.CharField(
         max_length=30,
-        null=True
+        blank=True
     )
 
     remote = models.BooleanField(
