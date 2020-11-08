@@ -91,6 +91,9 @@ class OfferCategory(models.Model):
         max_length=20
     )
 
+    def __str__(self):
+        return self.name
+
 class Offer(models.Model):
     """
     Model of offer published by user (not job offer).
@@ -143,6 +146,9 @@ class JobOfferCategory(models.Model):
         max_length=20
     )
 
+    def __str__(self):
+        return self.name
+
 class JobOffer(models.Model):
     """
     Job offer model.
@@ -186,6 +192,10 @@ class JobOffer(models.Model):
     company = models.CharField(
         max_length=30,
         null=True
+    )
+
+    remote = models.BooleanField(
+        default=False
     )
 
     def __str__(self):
