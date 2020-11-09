@@ -103,14 +103,24 @@ class OffersCategoriesList(generics.GenericAPIView):
 
 # JOB OFFERS
 class JobOfferList(generics.ListCreateAPIView):
-    queryset = JobOffer.objects.all()
+    # queryset = JobOffer.objects.all()
     serializer_class = JobOfferSerializer
     
     # filters
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filter_fields = ('city_id', 'user_id', 'category_id', 'remote', 'min_salary')
+    filter_fields = ('city_id', 'user_id', 'category_id', 'remote')
     search_fields = ('name', 'company')
     ordering_fields = ('max_salary', 'creation_date',)
+
+    def get_queryset(self):
+        min_salary_f = self.request.query_params.get('min_salary_f', None)
+        if min_salary_f:
+            try:
+                return JobOffer.objects.filter(min_salary__gte=min_salary_f)
+            except:
+                return JobOffer.objects.all()
+        
+        return JobOffer.objects.all()
 
 class JobOfferDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = JobOffer.objects.all()
