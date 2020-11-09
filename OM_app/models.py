@@ -113,7 +113,7 @@ class Offer(models.Model):
     category_id = models.PositiveIntegerField()
 
     name = models.CharField(
-        max_length=30,
+        max_length=45,
     )
 
     price = models.DecimalField(
@@ -168,22 +168,12 @@ class JobOffer(models.Model):
     category_id = models.PositiveIntegerField()
 
     name = models.CharField(
-        max_length=30,
+        max_length=45,
     )
 
-    min_salary = models.DecimalField(
-        max_digits=15,
-        decimal_places=2,
-        validators=[MinValueValidator(0.0)]
-    )
+    min_salary = models.PositiveIntegerField()
 
-    max_salary = models.DecimalField(
-        max_digits=15,
-        decimal_places=2,
-        blank=True,
-        null=True,
-        validators=[MinValueValidator(0.0)]
-    )
+    max_salary = models.PositiveIntegerField()
 
     description = models.TextField(
         max_length=1500,
@@ -211,7 +201,9 @@ class JobOffer(models.Model):
 # chat models
 
 class Contact(models.Model):
+        
     user_id = models.PositiveIntegerField(default=-1) # adding foreign key results in djongo error
+
     friends = models.ManyToManyField('self', blank=True)
 
     def __str__(self):
@@ -239,3 +231,25 @@ class Chat(models.Model):
 
     def __str__(self):
         return "{}".format(self.pk)
+
+class FavouriteOffer(models.Model):
+    user_id = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
+
+    favourite = models.ForeignKey(
+        Offer,
+        on_delete=models.CASCADE,
+    )
+
+class FavouriteJobOffer(models.Model):
+    user_id = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
+
+    favourite = models.ForeignKey(
+        JobOffer,
+        on_delete=models.CASCADE,
+    )

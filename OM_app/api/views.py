@@ -108,9 +108,9 @@ class JobOfferList(generics.ListCreateAPIView):
     
     # filters
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filter_fields = ('city_id', 'user_id', 'category_id', 'remote')
+    filter_fields = ('city_id', 'user_id', 'category_id', 'remote', 'min_salary')
     search_fields = ('name', 'company')
-    ordering_fields = ('min_salary', 'max_salary', 'creation_date',)
+    ordering_fields = ('max_salary', 'creation_date',)
 
 class JobOfferDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = JobOffer.objects.all()
