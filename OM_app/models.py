@@ -181,6 +181,7 @@ class JobOffer(models.Model):
         max_digits=15,
         decimal_places=2,
         blank=True,
+        null=True,
         validators=[MinValueValidator(0.0)]
     )
 
