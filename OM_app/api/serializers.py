@@ -102,3 +102,15 @@ class ChatSerializer(serializers.ModelSerializer):
             chat.participants.add(contact)
         chat.save()
         return chat
+
+# favourites
+
+class FavouriteOfferSerialzier(serializers.ModelSerializer):
+    class Meta:
+        model = FavouriteOffer
+        fields = '__all__'
+
+class FavouriteJobOfferSerialzier(serializers.ModelSerializer):
+    class Meta:
+        model = FavouriteJobOffer
+        fields = '__all__'

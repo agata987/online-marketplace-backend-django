@@ -169,3 +169,78 @@ class ChatDeleteView(generics.DestroyAPIView):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
     permission_classes = (IsAuthenticated, )
+
+# favourites
+
+class FavouriteOffersView(generics.ListAPIView):
+    serializer_class = OfferSerializer
+    permission_classes = (IsAuthenticated, )
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        favourites = FavouriteOffer.objects.filter(user_id=user_id)
+
+        queryset = []
+        for obj in favourites:
+            queryset.append(obj.offer_id)
+
+        return queryset
+
+class FavouriteJobOffersView(generics.ListAPIView):
+    serializer_class = JobOfferSerializer
+    permission_classes = (IsAuthenticated, )
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        favourites = FavouriteJobOffer.objects.filter(user_id=user_id)
+
+        queryset = []
+        for obj in favourites:
+            queryset.append(obj.job_offer_id)
+
+        return queryset
+
+@api_view(['POST','DELETE'])
+def offer_to_favourites(request):
+
+    if request.method == 'POST':
+        serializer = FavouriteOfferSerialzier(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status.HTTP_200_OK)
+        return Response(status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+
+        obj_id = request.query_params.get('offer_id', None)
+
+        try:
+            obj = FavouriteOffer.objects.get(offer_id=obj_id, user_id=request.user.id)
+        except FavouriteOffer.DoesNotExist:
+            return Response(status.HTTP_404_NOT_FOUND)
+        
+        obj.delete()
+        return Response(status.HTTP_204_NO_CONTENT)
+
+@api_view(['POST','DELETE'])
+def joboffer_to_favourites(request):
+
+    if request.method == 'POST':
+        serializer = FavouriteJobOfferSerialzier(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status.HTTP_200_OK)
+        return Response(status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+
+        obj_id = request.query_params.get('job_offer_id', None)
+        user_id = request.user.id
+
+        try:
+            obj = FavouriteJobOffer.objects.get(job_offer_id = obj_id, user_id=request.user.id)
+        except FavouriteOffer.DoesNotExist:
+            return Response(status.HTTP_404_NOT_FOUND)
+        
+        obj.delete()
+        return Response(status.HTTP_204_NO_CONTENT)

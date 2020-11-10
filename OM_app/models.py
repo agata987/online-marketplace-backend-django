@@ -173,7 +173,10 @@ class JobOffer(models.Model):
 
     min_salary = models.PositiveIntegerField()
 
-    max_salary = models.PositiveIntegerField()
+    max_salary = models.PositiveIntegerField(
+        null=True,
+        blank=True
+    )
 
     description = models.TextField(
         max_length=1500,
@@ -238,10 +241,13 @@ class FavouriteOffer(models.Model):
         on_delete=models.CASCADE,
     )
 
-    favourite = models.ForeignKey(
+    offer_id = models.ForeignKey(
         Offer,
         on_delete=models.CASCADE,
     )
+
+    def __str__(self):
+        return self.offer_id.name
 
 class FavouriteJobOffer(models.Model):
     user_id = models.ForeignKey(
@@ -249,7 +255,10 @@ class FavouriteJobOffer(models.Model):
         on_delete=models.CASCADE,
     )
 
-    favourite = models.ForeignKey(
+    job_offer_id = models.ForeignKey(
         JobOffer,
         on_delete=models.CASCADE,
     )
+    
+    def __str__(self):
+        return self.offer_id.name

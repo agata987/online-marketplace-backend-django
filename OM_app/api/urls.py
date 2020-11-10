@@ -7,7 +7,11 @@ from rest_framework_simplejwt.views import (
 from .views import *
 
 urlpatterns = [
-
+    # FAVOURITES
+    path('offers/favourites/list/', FavouriteOffersView.as_view(), name='favourites-offers'),
+    path('offers/favourites/', offer_to_favourites),
+    path('joboffers/favourites/list/', FavouriteJobOffersView.as_view(), name='favourites-offers'),
+    path('joboffers/favourites/', joboffer_to_favourites),
     # AUTHENTICATION
     path('auth/token/', TokenObtainPairView.as_view(), name='token-obtain-pair'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
