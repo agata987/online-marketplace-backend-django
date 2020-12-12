@@ -205,6 +205,10 @@ def offer_to_favourites(request):
 
     if request.method == 'POST':
         serializer = FavouriteOfferSerialzier(data=request.data)
+
+        # sprawdzanie czy ta oferta juz istnieje
+        #....
+
         if serializer.is_valid():
             serializer.save()
             return Response(status.HTTP_200_OK)
