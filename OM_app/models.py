@@ -244,7 +244,6 @@ class FavouriteOffer(models.Model):
     offer_id = models.ForeignKey(
         Offer,
         on_delete=models.CASCADE,
-        unique=True
     )
 
     def __str__(self):

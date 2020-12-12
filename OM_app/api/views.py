@@ -207,9 +207,10 @@ def offer_to_favourites(request):
         serializer = FavouriteOfferSerialzier(data=request.data)
 
         # sprawdzanie czy ta oferta juz istnieje
-        #....
+        favourites_offers = FavouriteOffer.objects.filter(user_id=request.data["user_id"], offer_id=request.data["offer_id"])
 
-        if serializer.is_valid():
+
+        if serializer.is_valid() and not favourites_offers:
             serializer.save()
             return Response(status.HTTP_200_OK)
         return Response(status.HTTP_400_BAD_REQUEST)
