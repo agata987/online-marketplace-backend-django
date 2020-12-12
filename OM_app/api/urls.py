@@ -1,4 +1,8 @@
-from django.urls import path
+from django.urls import (
+    path,
+    include
+)
+
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -22,12 +26,13 @@ urlpatterns = [
     path('chat/<pk>/update/', ChatUpdateView.as_view()),
     path('chat/<pk>/delete/', ChatDeleteView.as_view()),
     # USERS
+    path('users/close-account/', delete_user),
     path('users/current/', CurrentUser.as_view(), name='current-user'),                                         # get current user data/ update email or username
     path('users/', UsersList.as_view(), name='users-list'),
     path('users/<pk>/', UserDetail.as_view(), name='user-detail'),
     # PASSWORDS
     path('auth/password/change/', ChangePasswordView.as_view(), name='change-password'),                        # change user's password
-    # path('auth/password/reset/', reset_password),                                                             # reset user's password by sending an e-mail
+    path('auth/password/reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     # GENERAL
     path('voivodeships-cities/', VoivodeshipCitiesList.as_view(), name='voivodeships-cities-list'),             # get list of voivodeships and cities
     path('citites/<pk>/', CitiesList.as_view(), name='cities-list'),
@@ -43,5 +48,3 @@ urlpatterns = [
 
 # TODO
 # trzeba dodac mozliwosc resetowania hasla za pomoca email'a
-# dodac chat
-# oferty pracy

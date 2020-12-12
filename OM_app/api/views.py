@@ -20,6 +20,19 @@ class UserDetail(generics.RetrieveAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
+@api_view(('DELETE',))
+def delete_user(request):
+
+    user = request.user
+    
+    if user:
+        user_obj = User.objects.get(id=user.id)
+        user_obj.delete()
+
+        return Response(status.HTTP_204_NO_CONTENT)
+    else:
+        return Response(status.HTTP_400_BAD_REQUEST)
+
 class CurrentUser(generics.GenericAPIView):
 
     def get(self, request, *args, **kwargs):
