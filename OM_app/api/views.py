@@ -206,7 +206,7 @@ def offer_to_favourites(request):
     if request.method == 'POST':
         serializer = FavouriteOfferSerialzier(data=request.data)
 
-        # sprawdzanie czy ta oferta juz istnieje
+        # check if the offer is already in favourites
         favourites_offers = FavouriteOffer.objects.filter(user_id=request.data["user_id"], offer_id=request.data["offer_id"])
 
 
@@ -232,7 +232,11 @@ def joboffer_to_favourites(request):
 
     if request.method == 'POST':
         serializer = FavouriteJobOfferSerialzier(data=request.data)
-        if serializer.is_valid():
+
+        # check if the job offer is already in favourites
+        favourites_joboffers = FavouriteJobOffer.objects.filter(user_id=request.data["user_id"], job_offer_id=request.data["job_offer_id"])
+
+        if serializer.is_valid() and not favourites_joboffers:
             serializer.save()
             return Response(status.HTTP_200_OK)
         return Response(status.HTTP_400_BAD_REQUEST)
