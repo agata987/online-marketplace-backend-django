@@ -155,3 +155,11 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'  # or any prefix you choose
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# E-mail/ SMTP
+
+EMAIL_USE_TLS = True    # Transport Layer Security, successor of SSL, used to establish secure connection between web server and client
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'onlinemarketplace100@gmail.com'
+EMAIL_HOST_PASSWORD = 'OM@13568'
